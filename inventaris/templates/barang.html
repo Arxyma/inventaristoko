@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<!-- {{title | upper}} <br> -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <h3>Daftar Barang</h3>
+        </div>
+        <div class="col-md-3">
+            <button type="button" class="btn btn-sm btn-primary mr-auto" data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop">
+                Tambah Data
+            </button>
+            <a href="{% url 'export_xlsx' %}" class="btn btn-sm btn-success">Export .xlsx</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered table-stripped table-hover" id="tabel">
+                <thead>
+                    <tr>
+                        <th>Gambar Produk</th>
+                        <th>Nama Barang</th>
+                        <th>Harga Beli</th>
+                        <th>Harga Jual</th>
+                        <th>Jumlah Stok</th>
+                        <th>Supplier</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for items in barangs %}
+                    <tr>
+                        <td>
+                            {% if items.img_produk %}
+                            <img src="{{ items.img_produk.url }}" width="90px">
+                            {% endif %}
+                        </td>
+                        <td>{{ items.nama_barang }}</td>
+                        <td>{{ items.harga_beli }}</td>
+                        <td>{{ items.harga_jual }}</td>
+                        <td>{{ items.jumlah_stok }}</td>
+                        <td>{{ items.id_supplier }}</td>
+                        <td>
+                            <a role="button" class="btn btn-warning btn-sm"
+                                href="{% url 'ubah_barang' items.id %}">Ubah</a>
+                            <button type="button" class="btn btn-danger btn-sm" id="hapus-{{ items.id }}">
+                                Hapus
+                            </button>
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Tambah Barang</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/barang/" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="d-grid gap-2">
+                        {% csrf_token %}
+                        {{form.as_p }}
+                        <!-- <button class="btn btn-success">Tambah Barang</button> -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-success">Submit Barang</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

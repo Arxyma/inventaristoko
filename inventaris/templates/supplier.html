@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <h3>Daftar Supplier</h3>
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-primary mr-auto" data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop">
+                Tambah Data
+            </button>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered table-stripped table-hover" id="tabel">
+                <thead>
+                    <tr>
+                        <th>Nama Supplier</th>
+                        <th>Alamat</th>
+                        <th>Lama Kontrak</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for items in suppliers %}
+                    <tr>
+                        <td>{{ items.nama_supplier }}</td>
+                        <td>{{ items.alamat }}</td>
+                        <td>{{ items.lama_kontrak }} Bulan</td>
+                        <td>
+                            <a role="button" class="btn btn-warning btn-sm"
+                                href="{% url 'ubah_supplier' items.id %}">Ubah</a>
+                            <!-- <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#hapus-{{ items.id }}">
+                                Hapus
+                            </button> -->
+                            <button type="button" class="btn btn-danger btn-sm" id="hapus-{{ items.id }}">
+                                Hapus
+                            </button>
+                        </td>
+                    </tr>
+
+                    <!-- modal -->
+                    <!-- <div class="modal fade" id="hapus-{{ items.id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Hapus</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Apakah anda yakin menghapus <strong>{{ items.nama_supplier }} ?</strong> ini?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Tidak</button>
+                                    <a role="button" class="btn btn-danger"
+                                        href="{% url 'hapus_supplier' items.id %}">Hapus</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Tambah Supplier</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/supplier/" method="post">
+                <div class="modal-body">
+                    <div class="d-grid gap-2">
+                        {% csrf_token %}
+                        {{form.as_p}}
+                        <!-- <button class="btn btn-success">Tambah Supplier</button> -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-success">Submit Supplier</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

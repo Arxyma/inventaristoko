@@ -15,7 +15,29 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from inventaris import views
+from django.contrib.auth.views import LoginView, LogoutView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('barang/', views.barang, name='barang'),
+    path('barang/ubah/<int:id_barang>', views.ubah_barang, name='ubah_barang'),
+    path('barang/hapus/<int:id_barang>',
+         views.hapus_barang, name="hapus_barang"),
+    path('supplier/', views.supplier, name='supplier'),
+    path('supplier/ubah/<int:id_supplier>',
+         views.ubah_supplier, name='ubah_supplier'),
+    path('supplier/hapus/<int:id_supplier>',
+         views.hapus_supplier, name="hapus_supplier"),
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
+    path('signup/', views.signup, name='signup'),
+    path('export/xlsx/', views.export_xlsx, name='export_xlsx'),
+    # path('tambah-barang/', views.tambah_barang),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

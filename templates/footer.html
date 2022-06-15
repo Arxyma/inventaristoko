@@ -1,0 +1,82 @@
+{% load static %}
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/sweetalert2.all.min.js' %}"></script>
+<script src="{% static 'js/jquery-3.5.1.js' %}"></script>
+<script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'js/dataTables.bootstrap5.min.js' %}"></script>
+<script>
+
+    $(document).ready(function () {
+        $('#tabel').DataTable({
+            "lengthMenu": [[5, 15, 30, -1], [5, 15, 30, "Semua"]],
+        });
+    });
+
+    {% for message in messages %}
+    {% if message.tags == 'success' %}
+    Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: '{{ message }}',
+        showConfirmButton: false,
+        timerProgressBar: true,
+        width: '24em',
+        timer: 1500
+    })
+    {% else %}
+    Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: '{{ message }}',
+        showConfirmButton: false,
+        timerProgressBar: true,
+        width: '24em',
+        timer: 1500
+    })
+    {% endif %}
+    {% endfor %}
+
+    {% for items in suppliers %}
+    document.getElementById("hapus-{{ items.id }}").addEventListener('click', function () {
+        Swal.fire({
+            icon: 'warning',
+            title: ' Apakah anda yakin menghapus {{ items.nama_supplier }} ?',
+            showCancelButton: true,
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak',
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                window.location = "{% url 'hapus_supplier' items.id %}"
+            }
+        })
+    })
+    {% endfor %}
+
+    {% for items in barangs %}
+    document.getElementById("hapus-{{ items.id }}").addEventListener('click', function () {
+        Swal.fire({
+            icon: 'warning',
+            title: ' Apakah anda yakin menghapus {{ items.nama_barang }} ?',
+            showCancelButton: true,
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak',
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                window.location = "{% url 'hapus_barang' items.id %}"
+            }
+        })
+    })
+    {% endfor %}
+
+</script>
+{% block scripts %}
+{% endblock scripts %}
+</body>
+
+</html>
