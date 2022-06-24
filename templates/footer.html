@@ -11,6 +11,16 @@
             "lengthMenu": [[5, 15, 30, -1], [5, 15, 30, "Semua"]],
         });
     });
+    $(document).ready(function () {
+        $('#tabel_index1').DataTable({
+            "lengthMenu": [[5, 15, 30, -1], [5, 15, 30, "Semua"]],
+        });
+    });
+    $(document).ready(function () {
+        $('#tabel_index2').DataTable({
+            "lengthMenu": [[5, 15, 30, -1], [5, 15, 30, "Semua"]],
+        });
+    });
 
     {% for message in messages %}
     {% if message.tags == 'success' %}

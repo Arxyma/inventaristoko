@@ -17,7 +17,7 @@
                 {% csrf_token %}
                 {{form.as_p}}
                 <button class="btn btn-success">Ubah Data</button>
-                <a href="/supplier" class="btn btn-primary">Kembali</a>
+                <a href="{% url 'supplier' %}" class="btn btn-primary">Kembali</a>
             </form>
 
         </div>

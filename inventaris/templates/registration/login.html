@@ -5,26 +5,29 @@
 {% if user.is_authenticated %}
 <meta http-equiv="refresh" content="0; url={% url 'barang' %}">
 {% else %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">
-                    Login
-                </div>
-                <div class="card-body">
-                    <form method="post">
-                        {% csrf_token %}
+<center>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-3 position-absolute top-50 start-50 translate-middle">
+                <div class="card">
+                    <div class="card-header">
+                        <strong>Login Karyawan</strong>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
 
-                        {{ form.as_p }}
+                            {{ form.as_p }}
 
-                        <button class="btn btn-primary">Masuk</button>
-                    </form>
+                            <button class="btn btn-primary">Masuk</button>
+                        </form>
+                    </div>
                 </div>
+                <p>Belum memiliki akun? Silahkan hubungi admin</p>
             </div>
         </div>
     </div>
-</div>
+</center>
 {% endif %}
 
 {% endblock %}

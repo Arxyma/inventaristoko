@@ -5,25 +5,25 @@
 
 <!-- {{title | upper}} <br> -->
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-9">
-            <h3>Daftar Barang</h3>
-        </div>
-        <div class="col-md-3">
-            <button type="button" class="btn btn-sm btn-primary mr-auto" data-bs-toggle="modal"
+<div class="container mt-5 mb-5">
+    <div class="d-flex">
+        <h3 class="flex-fill">Daftar Barang</h3>
+        <ul class="d-flex justify-content-end">
+            <a href="{% url 'export_xlsx' %}" class="btn btn-sm btn-success">Export .xlsx</a>
+            <div class="ms-2"></div>
+            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
                 data-bs-target="#staticBackdrop">
                 Tambah Data
             </button>
-            <a href="{% url 'export_xlsx' %}" class="btn btn-sm btn-success">Export .xlsx</a>
-        </div>
+        </ul>
     </div>
 
     <div class="row">
         <div class="col-md-12">
             <table class="table table-bordered table-stripped table-hover" id="tabel">
-                <thead>
+                <thead class="table-dark">
                     <tr>
+                        <th>No.</th>
                         <th>Gambar Produk</th>
                         <th>Nama Barang</th>
                         <th>Harga Beli</th>
@@ -36,6 +36,7 @@
                 <tbody>
                     {% for items in barangs %}
                     <tr>
+                        <td>{{ forloop.counter }}</td>
                         <td>
                             {% if items.img_produk %}
                             <img src="{{ items.img_produk.url }}" width="90px">
@@ -54,7 +55,6 @@
                             </button>
                         </td>
                     </tr>
-
                     {% endfor %}
                 </tbody>
             </table>

@@ -9,13 +9,15 @@ from django.conf import settings
 from inventaris import resource
 
 
-def export_xlsx(request):
-    barang = resource.BarangResource()
-    dataset = barang.export()
-    response = HttpResponse(
-        dataset.xlsx, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    response['Content-Dispositon'] = 'attachment; filename="report_barang.xlsx"'
-    return response
+def index(request):
+    barang = models.Barang.objects.all()
+    supplier = models.Supplier.objects.all()
+
+    konteks = {
+        'barang': barang,
+        'supplier': supplier,
+    }
+    return render(request, 'index.html', konteks)
 
 
 @login_required(login_url=settings.LOGIN_URL)
@@ -168,3 +170,12 @@ def hapus_supplier(request, id_supplier):
 
     messages.success(request, "Data berhasil dihapus")
     return redirect('supplier')
+
+
+def export_xlsx(request):
+    barang = resource.BarangResource()
+    dataset = barang.export()
+    response = HttpResponse(
+        dataset.xlsx, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename="report_barang.xlsx"'
+    return response
